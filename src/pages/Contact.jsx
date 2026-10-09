@@ -4,6 +4,7 @@ import { Seo, Btn } from '../components'
 import { PageHero } from './common'
 import { SITE, services } from '../data'
 import { wa } from '../components'
+import { SelectField } from '../components/SelectField'
 
 export function Contact() {
   const empty = { name: '', email: '', phone: '', business: '', service: '', budget: '', details: '' }
@@ -62,8 +63,8 @@ export function Contact() {
           <F k="email" label="Email" req><input id="email" type="email" className="field" value={v.email} onChange={set('email')} autoComplete="email" /></F>
           <F k="phone" label="Phone"><input id="phone" type="tel" className="field" value={v.phone} onChange={set('phone')} /></F>
           <F k="business" label="Business name"><input id="business" className="field" value={v.business} onChange={set('business')} /></F>
-          <F k="service" label="Service" req><select id="service" className="field" value={v.service} onChange={set('service')}><option value="">Select a service</option>{services.map(s => <option key={s.title}>{s.title}</option>)}</select></F>
-          <F k="budget" label="Budget range"><select id="budget" className="field" value={v.budget} onChange={set('budget')}><option value="">Select a range</option><option>Under PKR 25,000</option><option>PKR 25,000 – 50,000</option><option>PKR 50,000 – 80,000</option><option>PKR 80,000+</option></select></F></div>
+          <F k="service" label="Service" req><SelectField id="service" value={v.service} options={services.map(s => s.title)} placeholder="Select a service" onChange={value => setV(current => ({ ...current, service: value }))} /></F>
+          <F k="budget" label="Budget range"><SelectField id="budget" value={v.budget} options={['', 'Under PKR 25,000', 'PKR 25,000 – 50,000', 'PKR 50,000 – 80,000', 'PKR 80,000+']} placeholder="Select a range" onChange={value => setV(current => ({ ...current, budget: value }))} /></F></div>
         <F k="details" label="Project details" req><textarea id="details" rows={5} className="field" value={v.details} onChange={set('details')} /></F>
         <p className="text-xs text-ink/60">This site has no server. Sending opens WhatsApp (or your email app) with your message prefilled.</p>
         <div className="flex flex-wrap gap-3"><button type="button" onClick={() => send('wa', true)} className="btn btn-p">Send Project Inquiry</button><button type="button" onClick={() => send('mail', true)} className="btn btn-d">Send via Email Instead</button></div>

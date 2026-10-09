@@ -6,8 +6,24 @@ const Orbit = () => (
     <defs><linearGradient id="og" x1="0" x2="1"><stop stopColor="#9D6BFF" /><stop offset="1" stopColor="#4338F5" /></linearGradient></defs>
     <ellipse cx="300" cy="250" rx="290" ry="200" stroke="url(#og)" strokeWidth="2" opacity=".7" />
     <ellipse cx="300" cy="320" rx="270" ry="110" stroke="url(#og)" strokeWidth="1.5" opacity=".6" transform="rotate(-8 300 320)" />
-    <circle r="5" fill="#fff"><animateMotion dur="9s" repeatCount="indefinite" path="M10,250 a290,200 0 1,0 580,0 a290,200 0 1,0 -580,0" /></circle>
-    <circle r="4" fill="#9D6BFF"><animateMotion dur="6s" repeatCount="indefinite" path="M30,320 a270,110 0 1,1 540,0 a270,110 0 1,1 -540,0" /></circle>
+    <circle r="5" fill="#fff">
+      <animateMotion
+        dur="9s"
+        repeatCount="indefinite"
+        calcMode="linear"
+        path="M 590 250 C 590 360.457 460.457 450 300 450 C 139.543 450 10 360.457 10 250 C 10 139.543 139.543 50 300 50 C 460.457 50 590 139.543 590 250"
+      />
+    </circle>
+    <g transform="rotate(-8 300 320)">
+      <circle r="4" fill="#9D6BFF">
+        <animateMotion
+          dur="6s"
+          repeatCount="indefinite"
+          calcMode="linear"
+          path="M 570 320 C 570 380.751 449.117 430 300 430 C 150.883 430 30 380.751 30 320 C 30 259.249 150.883 210 300 210 C 449.117 210 570 259.249 570 320"
+        />
+      </circle>
+    </g>
   </svg>
 )
 

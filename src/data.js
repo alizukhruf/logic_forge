@@ -29,8 +29,8 @@ export const services = [
 // Edit prices here
 export const pricing = [
   { name: 'Starter Website', price: 'PKR 25,000', prefix: '', features: ['Up to 5 pages', 'Responsive layout', 'Contact form interface', 'Basic on-page SEO setup', 'Basic deployment assistance'] },
-  { name: 'Business Website', price: 'PKR 50,000', prefix: '', featured: true, features: ['Up to 10 pages', 'Custom design', 'Responsive layouts', 'Contact form integration', 'SEO-friendly structure', 'Deployment assistance'] },
-  { name: 'E-Commerce Website', price: 'PKR 80,000', prefix: 'Starting at', features: ['Product catalog', 'Shopping cart', 'Order management', 'Responsive storefront', 'Admin features based on project requirements', 'Deployment assistance'] },
+  { name: 'Business Website', price: 'PKR 30,000', prefix: '', featured: true, features: ['Up to 10 pages', 'Custom design', 'Responsive layouts', 'Contact form integration', 'SEO-friendly structure', 'Deployment assistance'] },
+  { name: 'E-Commerce Website', price: 'PKR 50,000', prefix: 'Starting at', features: ['Product catalog', 'Shopping cart', 'Order management', 'Responsive storefront', 'Admin features based on project requirements', 'Deployment assistance'] },
 ]
 export const faqs = [
   ['Are these final prices?', 'No. They are starting estimates and depend on project scope. Send your requirements for a clear quote.'],
