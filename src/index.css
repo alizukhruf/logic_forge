@@ -1,0 +1,38 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+@layer base {
+  body { @apply font-sans text-ink bg-navy antialiased overflow-x-hidden;
+    background-image: radial-gradient(circle at 15% 0%, rgba(99,60,255,.18), transparent 40%), radial-gradient(circle at 90% 60%, rgba(157,107,255,.12), transparent 45%); background-attachment: fixed; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-cyan; }
+  option { background: #0B0720; color: #fff; }
+}
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-6xl px-5; }
+  .glass { @apply bg-white/[0.06] backdrop-blur-xl border border-white/15; box-shadow: 0 8px 32px rgba(70,40,200,.22), inset 0 1px 0 rgba(255,255,255,.12); }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-bold transition hover:-translate-y-0.5; }
+  .btn-p { @apply relative overflow-hidden bg-gradient-to-r from-electric to-cyan text-white; box-shadow: 0 0 24px rgba(99,60,255,.55); }
+  .btn-p::after { content:''; position:absolute; inset:0; background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%); transform:translateX(-100%); }
+  .btn-p:hover::after { transform:translateX(100%); transition:transform .7s; }
+  .btn-s, .btn-d { @apply border border-white/25 text-white backdrop-blur-md hover:bg-white/10; }
+  .card { @apply glass relative rounded-2xl p-6 transition-[border-color,box-shadow] hover:border-cyan/60; transform: perspective(900px) rotateX(var(--ry,0deg)) rotateY(var(--rx,0deg)) translateY(var(--ty,0px)); }
+  .card:hover { --ty: -4px; box-shadow: 0 16px 48px rgba(99,60,255,.35), inset 0 1px 0 rgba(255,255,255,.15); }
+  .card::before { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .3s; background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(157,107,255,.28), transparent 60%); }
+  .card:hover::before { opacity:1; }
+  .field { @apply w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white backdrop-blur-md placeholder:text-white/40 focus:border-cyan; }
+  .dark-bg { @apply text-white;
+    background: radial-gradient(circle at 80% 15%, rgba(124,92,255,.35), transparent 45%), radial-gradient(circle at 5% 90%, rgba(67,56,245,.3), transparent 40%); }
+}
+@keyframes float { 50% { transform: translateY(-12px); } }
+.float { animation: float 5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { *, .float { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+@property --a { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+.glow-border::before { content:''; position:absolute; inset:-2px; border-radius:inherit; padding:2px; pointer-events:none; background:conic-gradient(from var(--a),#4338F5,#9D6BFF,transparent 40%,#4338F5); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:rot 4s linear infinite; }
+@keyframes rot { to { --a: 360deg; } }
+.grad-text { background:linear-gradient(90deg,#9D6BFF,#6D5CFF,#C4B5FD,#9D6BFF); background-size:300% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; animation:shine 6s linear infinite; }
+@keyframes shine { to { background-position:300% 0; } }
+.aur { filter:blur(110px); animation:drift 22s ease-in-out infinite alternate; }
+@keyframes drift { to { transform:translate(120px,80px) scale(1.2); } }
+.marquee { animation:marq 35s linear infinite; } .marquee:hover { animation-play-state:paused; }
+@keyframes marq { to { transform:translateX(-50%); } }
+.cursor-glow { position:fixed; left:0; top:0; width:520px; height:520px; pointer-events:none; z-index:1; transform:translate(calc(var(--gx,-999px) - 50%),calc(var(--gy,-999px) - 50%)); background:radial-gradient(circle,rgba(124,92,255,.16),transparent 60%); }
+@media (pointer: coarse) { .cursor-glow { display:none; } }

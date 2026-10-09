@@ -1,0 +1,8 @@
+export { Home } from './Home.jsx'
+export { About } from './About.jsx'
+export { Services } from './Services.jsx'
+export { Projects } from './Projects.jsx'
+export { ProjectDetails } from './ProjectDetails.jsx'
+export { Pricing } from './Pricing.jsx'
+export { Contact } from './Contact.jsx'
+export { NotFound } from './NotFound.jsx'
