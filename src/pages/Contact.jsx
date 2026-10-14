@@ -4,10 +4,22 @@ import { Seo, SelectField, wa } from '../components'
 import { PageHero } from './common'
 import { SITE, services } from '../data'
 
+function ContactField({ id, label, required, error, children }) {
+  return (
+    <div>
+      <label htmlFor={id} className="mb-1 block text-sm font-semibold">
+        {label}{required ? ' *' : ' (optional)'}
+      </label>
+      {children}
+      {error && <p role="alert" className="mt-1 text-sm text-red-600">{error}</p>}
+    </div>
+  )
+}
+
 export function Contact() {
   const empty = { name: '', email: '', phone: '', business: '', service: '', budget: '', details: '' }
   const [v, setV] = useState(empty); const [err, setErr] = useState({}); const [ok, setOk] = useState('')
-  const set = k => e => setV({ ...v, [k]: e.target.value })
+  const set = k => e => setV(current => ({ ...current, [k]: e.target.value }))
   const validate = () => { const e = {}
     if (v.name.trim().length < 2) e.name = 'Please enter your name.'
     if (!/^\S+@\S+\.\S+$/.test(v.email)) e.email = 'Please enter a valid email.'
@@ -49,21 +61,19 @@ export function Contact() {
 
     setOk('Your email app opened with your message ready. Press send there to deliver it.')
   }
-  const F = ({ k, label, req, children }) => <div><label htmlFor={k} className="mb-1 block text-sm font-semibold">{label}{req ? ' *' : ' (optional)'}</label>{children}{err[k] && <p role="alert" className="mt-1 text-sm text-red-600">{err[k]}</p>}</div>
-
   return (<>
     <Seo title="Contact" desc="Contact Logic Forge on WhatsApp or email to discuss your website project." />
     <PageHero title={<><span>Let's Build Your <span className="grad-text">Website Together.</span></span></>} text="Have an idea for your business? Tell me what you need, and let's discuss how we can bring it online." />
     <section className="bg-white/5 py-16"><div className="wrap grid gap-8 lg:grid-cols-3">
       <form noValidate onSubmit={e => { e.preventDefault(); send('wa') }} className="card space-y-4 lg:col-span-2 !p-8">
         <div className="grid gap-4 sm:grid-cols-2">
-          <F k="name" label="Name" req><input id="name" className="field" value={v.name} onChange={set('name')} autoComplete="name" /></F>
-          <F k="email" label="Email" req><input id="email" type="email" className="field" value={v.email} onChange={set('email')} autoComplete="email" /></F>
-          <F k="phone" label="Phone"><input id="phone" type="tel" className="field" value={v.phone} onChange={set('phone')} /></F>
-          <F k="business" label="Business name"><input id="business" className="field" value={v.business} onChange={set('business')} /></F>
-          <F k="service" label="Service" req><SelectField id="service" value={v.service} options={services.map(s => s.title)} placeholder="Select a service" onChange={value => setV(current => ({ ...current, service: value }))} /></F>
-          <F k="budget" label="Budget range"><SelectField id="budget" value={v.budget} options={['', 'Under PKR 25,000', 'PKR 25,000 – 50,000', 'PKR 50,000 – 80,000', 'PKR 80,000+']} placeholder="Select a range" onChange={value => setV(current => ({ ...current, budget: value }))} /></F></div>
-        <F k="details" label="Project details" req><textarea id="details" rows={5} className="field" value={v.details} onChange={set('details')} /></F>
+          <ContactField id="name" label="Name" required error={err.name}><input id="name" className="field" value={v.name} onChange={set('name')} autoComplete="name" /></ContactField>
+          <ContactField id="email" label="Email" required error={err.email}><input id="email" type="email" className="field" value={v.email} onChange={set('email')} autoComplete="email" /></ContactField>
+          <ContactField id="phone" label="Phone" error={err.phone}><input id="phone" type="tel" className="field" value={v.phone} onChange={set('phone')} /></ContactField>
+          <ContactField id="business" label="Business name" error={err.business}><input id="business" className="field" value={v.business} onChange={set('business')} /></ContactField>
+          <ContactField id="service" label="Service" required error={err.service}><SelectField id="service" value={v.service} options={services.map(s => s.title)} placeholder="Select a service" onChange={value => setV(current => ({ ...current, service: value }))} /></ContactField>
+          <ContactField id="budget" label="Budget range" error={err.budget}><SelectField id="budget" value={v.budget} options={['', 'Under PKR 25,000', 'PKR 25,000 – 50,000', 'PKR 50,000 – 80,000', 'PKR 80,000+']} placeholder="Select a range" onChange={value => setV(current => ({ ...current, budget: value }))} /></ContactField></div>
+        <ContactField id="details" label="Project details" required error={err.details}><textarea id="details" rows={5} className="field" value={v.details} onChange={set('details')} /></ContactField>
         <p className="text-xs text-ink/60">This site has no server. Sending opens WhatsApp (or your email app) with your message prefilled.</p>
         <div className="flex flex-wrap gap-3"><button type="button" onClick={() => send('wa', true)} className="btn btn-p">Send Project Inquiry</button><button type="button" onClick={() => send('mail', true)} className="btn btn-d">Send via Email Instead</button></div>
         {ok && <p role="status" className="rounded-xl bg-green-50 p-3 text-sm text-green-800">{ok}</p>}
