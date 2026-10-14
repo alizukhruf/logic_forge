@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Seo, Btn, Heading, Reveal, Devices, Marquee, ProjectCard } from '../components'
 import { benefits, services, projects } from '../data'
 import { FinalCta, Process } from './common'

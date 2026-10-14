@@ -3,7 +3,6 @@
   body { @apply font-sans text-ink bg-navy antialiased overflow-x-hidden;
     background-image: radial-gradient(circle at 15% 0%, rgba(99,60,255,.18), transparent 40%), radial-gradient(circle at 90% 60%, rgba(157,107,255,.12), transparent 45%); background-attachment: fixed; }
   :focus-visible { @apply outline-2 outline-offset-2 outline-cyan; }
-  option { background: #0B0720; color: #fff; }
 }
 @layer components {
   .wrap { @apply mx-auto w-full max-w-6xl px-5; }

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { Logo } from './Logo.jsx'
 
-const links = [['/', 'Home'], ['/about', 'About'], ['/services', 'Services'], ['/projects', 'Projects'], ['/pricing', 'Pricing'], ['/contact', 'Contact']]
+const links = [['/', 'Home'], ['/about', 'About'], ['/services', 'Services'], ['/projects', 'Projects'], ['/pricing', 'Pricing']]
 
 export function Header() {
   const [open, setOpen] = useState(false); const { pathname } = useLocation()
@@ -26,5 +26,3 @@ export function Header() {
     </header>
   )
 }
-
-export { links }

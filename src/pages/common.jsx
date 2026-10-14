@@ -1,7 +1,7 @@
 import { Btn, Reveal } from '../components'
 import { process } from '../data'
 
-export const Process = ({ dark }) => (
+export const Process = () => (
   <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{process.map((s, i) => (
     <Reveal key={s.title} delay={i * 0.08}><div className="card h-full"><span className="text-sm font-extrabold text-cyan">0{i + 1}</span>
       <s.icon className="my-3 text-electric" size={28} /><h3 className="font-bold">{s.title}</h3><p className="mt-1 text-sm text-ink/70">{s.text}</p></div></Reveal>))}</div>

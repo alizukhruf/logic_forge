@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Reveal } from './Reveal.jsx'
 
 export function Heading({ eyebrow, title, text, dark, center = true }) {

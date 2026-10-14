@@ -1,6 +1,5 @@
-import { Seo, PricingCard } from '../components'
+import { Btn, Heading, PricingCard, Seo } from '../components'
 import { PageHero } from './common'
-import { Btn, Heading } from '../components'
 import { pricing, faqs } from '../data'
 
 export function Pricing() {

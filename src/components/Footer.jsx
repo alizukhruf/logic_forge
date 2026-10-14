@@ -4,7 +4,7 @@ import { Logo } from './Logo'
 import { wa } from './wa'
 import { SITE, services } from '../data'
 
-const links = [['/', 'Home'], ['/about', 'About'], ['/services', 'Services'], ['/projects', 'Projects'], ['/pricing', 'Pricing'], ['/contact', 'Contact']]
+const links = [['/', 'Home'], ['/about', 'About'], ['/services', 'Services'], ['/projects', 'Projects'], ['/pricing', 'Pricing']]
 
 export function Footer() {
   return (

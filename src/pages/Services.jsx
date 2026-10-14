@@ -1,7 +1,6 @@
-import { Seo, ServiceCard } from '../components'
+import { Heading, Reveal, Seo, ServiceCard } from '../components'
 import { FinalCta, PageHero, Process } from './common'
 import { services } from '../data'
-import { Heading, Reveal } from '../components'
 
 export function Services() {
   return (<>

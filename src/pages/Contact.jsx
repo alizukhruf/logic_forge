@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { MessageCircle, Mail } from 'lucide-react'
-import { Seo, Btn } from '../components'
+import { Seo, SelectField, wa } from '../components'
 import { PageHero } from './common'
 import { SITE, services } from '../data'
-import { wa } from '../components'
-import { SelectField } from '../components/SelectField'
 
 export function Contact() {
   const empty = { name: '', email: '', phone: '', business: '', service: '', budget: '', details: '' }
