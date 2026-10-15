@@ -16,13 +16,75 @@
   .card:hover { --ty: -4px; box-shadow: 0 16px 48px rgba(99,60,255,.35), inset 0 1px 0 rgba(255,255,255,.15); }
   .card::before { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .3s; background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(157,107,255,.28), transparent 60%); }
   .card:hover::before { opacity:1; }
+  @media (hover: none) {
+    .card:hover { --ty: 0; box-shadow: 0 8px 32px rgba(70,40,200,.22), inset 0 1px 0 rgba(255,255,255,.12); }
+    .card:hover::before { opacity:0; }
+  }
   .field { @apply w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white backdrop-blur-md placeholder:text-white/40 focus:border-cyan; }
   .dark-bg { @apply text-white;
     background: radial-gradient(circle at 80% 15%, rgba(124,92,255,.35), transparent 45%), radial-gradient(circle at 5% 90%, rgba(67,56,245,.3), transparent 40%); }
+  .admin-shell {
+    background:
+      radial-gradient(circle at 15% 10%, rgba(99,102,241,0.22), transparent 20%),
+      radial-gradient(circle at 80% 0%, rgba(168,85,247,0.16), transparent 20%),
+      linear-gradient(90deg, rgba(17,24,39,0.7), rgba(30,27,75,0.7));
+    position: relative;
+    overflow: hidden;
+  }
+  .admin-shell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
+    opacity: 0.4;
+  }
+  .admin-shell::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1.5px);
+    background-size: 30px 30px;
+    background-position: center;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .admin-card {
+    @apply relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.06] p-5 shadow-[0_0_30px_rgba(76,29,149,0.12)] backdrop-blur-xl;
+  }
+  .admin-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent 40%, rgba(255,255,255,0.02));
+    pointer-events: none;
+  }
 }
 @keyframes float { 50% { transform: translateY(-12px); } }
 .float { animation: float 5s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) { *, .float { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+.brand-wordmark {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.065em;
+  line-height: 1;
+  background: linear-gradient(105deg, #fff 18%, #c8f5ff 58%, #67d7ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(34, 211, 238, 0.18));
+}
+.logo-mark { transform: rotate(0); transition: transform 1.4s cubic-bezier(.2,.75,.25,1); }
+.logo-mark:hover { transform: rotate(360deg); }
+@keyframes admin-portal-motion {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0); box-shadow: 0 12px 40px rgba(67,56,245,.28); }
+  50% { transform: translate3d(-4px, -7px, 0) rotate(-1deg); box-shadow: 0 18px 48px rgba(67,56,245,.45); }
+}
+.admin-portal-motion { animation: admin-portal-motion 4.2s ease-in-out infinite; }
+.admin-portal-motion:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { *, .float, .admin-portal-motion { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 
 @property --a { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
 .glow-border::before { content:''; position:absolute; inset:-2px; border-radius:inherit; padding:2px; pointer-events:none; background:conic-gradient(from var(--a),#4338F5,#9D6BFF,transparent 40%,#4338F5); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; animation:rot 4s linear infinite; }

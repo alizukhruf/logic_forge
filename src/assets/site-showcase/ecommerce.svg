@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+  <defs><linearGradient id="hero" x2="1" y2="1"><stop stop-color="#f4e8d8"/><stop offset="1" stop-color="#f7d5c7"/></linearGradient><linearGradient id="shoe" x2="0" y2="1"><stop stop-color="#fb7185"/><stop offset="1" stop-color="#be123c"/></linearGradient></defs>
+  <rect width="1440" height="900" fill="#fff"/><rect width="1440" height="92" fill="#fff"/>
+  <text x="72" y="57" font-family="Arial,sans-serif" font-size="28" font-weight="700" letter-spacing="2" fill="#171717">FORME</text>
+  <g font-family="Arial,sans-serif" font-size="16" fill="#444"><text x="585" y="55">New arrivals</text><text x="710" y="55">Women</text><text x="810" y="55">Men</text><text x="890" y="55">Stories</text></g>
+  <circle cx="1314" cy="44" r="18" fill="#f4f4f5"/><path d="M1306 39h16l-2 14h-12zM1310 39v-4a4 4 0 018 0v4" fill="none" stroke="#222" stroke-width="2"/>
+  <rect y="92" width="1440" height="370" fill="url(#hero)"/>
+  <text x="92" y="181" font-family="Arial,sans-serif" font-size="15" font-weight="700" letter-spacing="4" fill="#9f1239">MOVE IN YOUR ELEMENT</text>
+  <text x="92" y="252" font-family="Arial,sans-serif" font-size="54" font-weight="700" fill="#18181b">Everyday,</text><text x="92" y="316" font-family="Arial,sans-serif" font-size="54" font-weight="700" fill="#18181b">reimagined.</text>
+  <text x="95" y="355" font-family="Arial,sans-serif" font-size="18" fill="#52525b">Thoughtful essentials made to move with you.</text>
+  <rect x="93" y="385" width="155" height="48" rx="24" fill="#18181b"/><text x="126" y="415" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#fff">Shop collection</text>
+  <ellipse cx="1010" cy="398" rx="235" ry="22" fill="#a33b4e" opacity=".18"/>
+  <path d="M809 323c63-15 120-91 184-131 34-21 70-16 95 11l74 82c19 21 46 31 75 34l70 7c35 3 55 21 55 44 0 20-17 35-43 38l-344 27c-33 2-60-8-82-26l-107-87c-13-11-10-27 23-35z" fill="url(#shoe)"/>
+  <path d="M802 363c70 2 113 84 197 79l351-29c10 23-5 45-37 48l-345 30c-50 4-93-10-128-38l-61-50c-20-17-11-39 23-40z" fill="#fff"/>
+  <g stroke="#fff" stroke-width="6" stroke-linecap="round"><path d="M989 260l84 41M970 277l85 39M954 294l80 36"/></g>
+  <rect y="462" width="1440" height="438" fill="#fff"/>
+  <text x="90" y="530" font-family="Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="3" fill="#a21caf">CURATED FOR YOU</text><text x="90" y="576" font-family="Arial,sans-serif" font-size="32" font-weight="700" fill="#18181b">Best sellers</text><text x="1260" y="568" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#52525b">View all →</text>
+  <g font-family="Arial,sans-serif">
+    <rect x="90" y="608" width="285" height="203" rx="13" fill="#f4f4f5"/><rect x="415" y="608" width="285" height="203" rx="13" fill="#eff6ff"/><rect x="740" y="608" width="285" height="203" rx="13" fill="#fef3c7"/><rect x="1065" y="608" width="285" height="203" rx="13" fill="#fce7f3"/>
+    <path d="M146 713c40-9 70-48 111-67 20-10 38-5 51 9l37 42c12 12 23 17 38 19l19 2c20 3 22 20 4 25l-147 12c-19 1-35-4-48-16l-67-25c-10-4-10-13 2-16z" fill="#f43f5e"/><path d="M464 738h176l-18 19H479z" fill="#1d4ed8"/><path d="M490 734l28-55h70l35 55z" fill="#60a5fa"/><circle cx="870" cy="711" r="55" fill="#f59e0b"/><circle cx="870" cy="711" r="34" fill="#fef3c7"/><path d="M1150 742q35-91 90-31l25 32z" fill="#db2777"/>
+    <text x="95" y="845" font-size="16" font-weight="700" fill="#18181b">Motion Runner</text><text x="95" y="872" font-size="14" fill="#71717a">$128</text><text x="420" y="845" font-size="16" font-weight="700" fill="#18181b">City Low</text><text x="420" y="872" font-size="14" fill="#71717a">$96</text><text x="745" y="845" font-size="16" font-weight="700" fill="#18181b">Everyday Tote</text><text x="745" y="872" font-size="14" fill="#71717a">$58</text><text x="1070" y="845" font-size="16" font-weight="700" fill="#18181b">Studio Sweat</text><text x="1070" y="872" font-size="14" fill="#71717a">$74</text>
+  </g>
+</svg>

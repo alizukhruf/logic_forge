@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+  <defs>
+    <linearGradient id="hero" x2="1" y2="1"><stop stop-color="#07142f"/><stop offset="1" stop-color="#1769aa"/></linearGradient>
+    <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#72d6ff"/><stop offset="1" stop-color="#143a75"/></linearGradient>
+  </defs>
+  <rect width="1440" height="900" fill="#f6f8fc"/>
+  <rect width="1440" height="82" fill="#fff"/>
+  <path d="M64 28h26l13 13-13 13H64L51 41z" fill="#2563eb"/><text x="116" y="51" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#10213e">NORTHSTAR</text>
+  <g font-family="Arial,sans-serif" font-size="16" fill="#42516a"><text x="700" y="49">Company</text><text x="815" y="49">Solutions</text><text x="935" y="49">Insights</text><text x="1030" y="49">Careers</text></g>
+  <rect x="1190" y="21" width="184" height="42" rx="21" fill="#2563eb"/><text x="1223" y="48" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#fff">Talk to our team</text>
+  <rect y="82" width="1440" height="500" fill="url(#hero)"/>
+  <circle cx="1260" cy="170" r="240" fill="#55c4ff" opacity=".13"/><circle cx="1100" cy="450" r="180" fill="#a2e7ff" opacity=".1"/>
+  <text x="90" y="193" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="4" fill="#73dcff">BUILT FOR WHAT'S NEXT</text>
+  <text x="90" y="275" font-family="Arial,sans-serif" font-size="62" font-weight="700" fill="#fff">A clearer path</text><text x="90" y="347" font-family="Arial,sans-serif" font-size="62" font-weight="700" fill="#fff">to better business.</text>
+  <text x="92" y="395" font-family="Arial,sans-serif" font-size="20" fill="#d6e8ff">Strategy, technology, and people aligned around</text><text x="92" y="426" font-family="Arial,sans-serif" font-size="20" fill="#d6e8ff">the opportunities that matter most.</text>
+  <rect x="90" y="462" width="176" height="52" rx="9" fill="#56c7ff"/><text x="121" y="495" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#08213e">Explore solutions</text>
+  <g>
+    <path d="M825 505V300l105-79v284z" fill="url(#glass)"/><path d="M940 505V206l122-96v395z" fill="#b5d6f2"/><path d="M1072 505V265l92-69v309z" fill="url(#glass)"/><path d="M1173 505V157l138-75v423z" fill="#d5e7f6"/>
+    <g stroke="#eaf7ff" stroke-width="5" opacity=".8"><path d="M850 325h55M850 365h55M850 405h55M850 445h55M967 245h65M967 291h65M967 337h65M967 383h65M967 429h65M1090 302h55M1090 345h55M1090 388h55M1196 192h92M1196 238h92M1196 284h92M1196 330h92M1196 376h92M1196 422h92"/></g>
+  </g>
+  <rect y="582" width="1440" height="318" fill="#fff"/>
+  <text x="90" y="651" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3" fill="#2563eb">HOW WE HELP</text><text x="90" y="700" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#10213e">Make your next move your best one.</text>
+  <g font-family="Arial,sans-serif">
+    <rect x="90" y="742" width="390" height="112" rx="14" fill="#f2f6fc"/><circle cx="131" cy="785" r="20" fill="#dbeafe"/><path d="M122 785h18M131 776v18" stroke="#2563eb" stroke-width="3"/><text x="166" y="784" font-size="20" font-weight="700" fill="#10213e">Digital transformation</text><text x="166" y="818" font-size="15" fill="#64748b">Modern platforms built for lasting impact.</text>
+    <rect x="525" y="742" width="390" height="112" rx="14" fill="#f2f6fc"/><circle cx="566" cy="785" r="20" fill="#dbeafe"/><path d="M555 789l8-9 7 6 8-10" fill="none" stroke="#2563eb" stroke-width="3"/><text x="601" y="784" font-size="20" font-weight="700" fill="#10213e">Growth strategy</text><text x="601" y="818" font-size="15" fill="#64748b">Turn ambitious ideas into measurable growth.</text>
+    <rect x="960" y="742" width="390" height="112" rx="14" fill="#f2f6fc"/><circle cx="1001" cy="785" r="20" fill="#dbeafe"/><circle cx="1001" cy="781" r="7" fill="none" stroke="#2563eb" stroke-width="3"/><path d="M988 797q13-17 26 0" fill="none" stroke="#2563eb" stroke-width="3"/><text x="1036" y="784" font-size="20" font-weight="700" fill="#10213e">Teams that deliver</text><text x="1036" y="818" font-size="15" fill="#64748b">Expert support from first idea to launch.</text>
+  </g>
+</svg>

@@ -67,7 +67,7 @@ function FloatingPanel({ items, title, className, delay = '0s' }) {
   )
 }
 
-export function Devices({ title = 'We Build Powerful Websites' }) {
+export function Devices({ title = 'We Build Powerful Websites', image, imageAlt }) {
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
@@ -101,7 +101,7 @@ export function Devices({ title = 'We Build Powerful Websites' }) {
       <OrbitGraphic />
       <motion.div style={{ rotateX, rotateY }} className="absolute inset-0">
         <div className="glass absolute right-0 top-[10%] w-[72%] rounded-2xl !border-white/25 p-1.5 shadow-[0_0_80px_rgba(124,92,255,.5)]">
-          <Browser title={title} className="rounded-xl" />
+          <Browser title={title} image={image} imageAlt={imageAlt} className="rounded-xl" />
         </div>
         <FloatingPanel
           className="left-0 top-[26%]"
