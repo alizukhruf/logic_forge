@@ -139,27 +139,3 @@ with check (
 );
 
 grant select, insert on public.inquiry_messages to authenticated;
-
-do $$
-begin
-  if exists (select 1 from pg_publication where pubname = 'supabase_realtime') then
-    if not exists (
-      select 1 from pg_publication_tables
-      where pubname = 'supabase_realtime'
-        and schemaname = 'public'
-        and tablename = 'project_inquiries'
-    ) then
-      alter publication supabase_realtime add table public.project_inquiries;
-    end if;
-
-    if not exists (
-      select 1 from pg_publication_tables
-      where pubname = 'supabase_realtime'
-        and schemaname = 'public'
-        and tablename = 'inquiry_messages'
-    ) then
-      alter publication supabase_realtime add table public.inquiry_messages;
-    end if;
-  end if;
-end;
-$$;

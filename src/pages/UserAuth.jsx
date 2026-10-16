@@ -83,7 +83,7 @@ export function UserAuth({ session, loading, mode }) {
 
   return (
     <>
-      <Seo title={isSignup ? 'Create an Account' : 'User Sign In'} desc={isSignup ? 'Create a Logic Forge account to manage your project inquiries.' : 'Sign in to your Logic Forge account.'} />
+      <Seo title={isSignup ? 'Create an Account' : 'User Sign In'} desc={isSignup ? 'Create a Logic Forge account to manage your project inquiries.' : 'Sign in to your Logic Forge account.'} noindex />
       <section className="py-20 sm:py-24">
         <div className="wrap">
           <div className="card mx-auto max-w-lg overflow-hidden !p-0 text-white">

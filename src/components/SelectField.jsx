@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 
-export function SelectField({ id, value, options, placeholder, onChange }) {
+export function SelectField({ id, value, options, placeholder, onChange, ariaInvalid, ariaDescribedBy, required }) {
   const [open, setOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const containerRef = useRef(null)
@@ -54,6 +54,9 @@ export function SelectField({ id, value, options, placeholder, onChange }) {
         id={id}
         type="button"
         role="combobox"
+        aria-required={required || undefined}
+        aria-invalid={ariaInvalid || undefined}
+        aria-describedby={ariaDescribedBy}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={`${id}-options`}

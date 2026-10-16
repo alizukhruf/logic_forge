@@ -21,7 +21,7 @@ export function Footer() {
     <footer className="relative overflow-hidden border-t border-white/10 bg-navy/35 text-white/75 backdrop-blur-xl">
       <div className="pointer-events-none absolute -top-40 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-electric/15 blur-[100px]" aria-hidden="true" />
       <div className="wrap relative z-10 pb-6 pt-12 sm:pt-16">
-        <div className="mb-12 flex flex-col gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-[0_20px_70px_rgba(67,56,245,0.12)] sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div className="mb-12 flex flex-col gap-5 rounded-3xl border border-white/10 bg-black/40 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.3)] backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan">Have a project in mind?</p>
             <h2 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">Let’s build something that works.</h2>
@@ -97,8 +97,10 @@ export function Footer() {
 
         <div className="flex flex-col gap-4 pt-5 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Logic Forge. All rights reserved.</p>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
             <Link to="/contact" className="transition-colors hover:text-white/80">Contact</Link>
+            <Link to="/privacy" className="transition-colors hover:text-white/80">Privacy</Link>
+            <Link to="/terms" className="transition-colors hover:text-white/80">Terms</Link>
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

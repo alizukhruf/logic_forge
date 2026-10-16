@@ -112,17 +112,3 @@ drop trigger if exists validate_user_profile_phone on public.user_profiles;
 create trigger validate_user_profile_phone
 before insert or update of phone on public.user_profiles
 for each row execute procedure public.validate_user_profile_phone();
-
-do $$
-begin
-  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
-    and not exists (
-      select 1 from pg_publication_tables
-      where pubname = 'supabase_realtime'
-        and schemaname = 'public'
-        and tablename = 'user_profiles'
-    ) then
-    alter publication supabase_realtime add table public.user_profiles;
-  end if;
-end;
-$$;

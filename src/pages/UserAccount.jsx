@@ -138,7 +138,7 @@ export function UserAccount({ session }) {
 
   return (
     <>
-      <Seo title="My Account" desc="View your Logic Forge profile, project inquiries, and messages." />
+      <Seo title="My Account" desc="View your Logic Forge profile, project inquiries, and messages." noindex />
       <section className="min-h-[70vh] py-12 text-white sm:py-16">
         <div className="wrap">
           <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://logic-forge-eosin.vercel.app/sitemap.xml

@@ -61,7 +61,7 @@ export function AdminLogin({ session, loading, isAdmin, adminError }) {
 
   return (
     <>
-      <Seo title="Admin Login" desc="Sign in to access the Logic Forge admin panel." />
+      <Seo title="Admin Login" desc="Sign in to access the Logic Forge admin panel." noindex />
       <section className="py-24">
         <div className="wrap">
           <div className="mx-auto max-w-md">
