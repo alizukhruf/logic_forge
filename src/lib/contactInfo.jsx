@@ -39,6 +39,16 @@ export function ContactInfoProvider({ children }) {
 
   useEffect(() => {
     refreshContactInfo()
+    const channel = supabase
+      .channel('public-site-contact-info')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'site_contact_info', filter: 'id=eq.public' }, () => void refreshContactInfo())
+      .subscribe(status => {
+        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          setContactInfoError('Live contact information updates are unavailable. Reload the page to see recent changes.')
+        }
+      })
+
+    return () => { void supabase.removeChannel(channel) }
   }, [refreshContactInfo])
 
   const saveContactInfo = useCallback(async values => {

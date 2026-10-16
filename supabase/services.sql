@@ -45,3 +45,17 @@ values
   ('website-maintenance-and-support', 'Website Maintenance and Support', 'Ongoing improvements, bug fixes, updates, and technical assistance.', 'Ongoing help to keep your site dependable and make practical improvements as your business and content evolve.', 'LifeBuoy', array['Content and page updates', 'Bug investigation and fixes', 'Dependency and compatibility review', 'Agreed support and response scope'], 7, true),
   ('seo-friendly-website-development', 'SEO-Friendly Website Development', 'Clean structure, accessible content, semantic HTML, and search-friendly foundations.', 'A strong technical foundation that helps people and search engines understand your pages. Search rankings are not guaranteed.', 'Search', array['Semantic page structure', 'Editable page titles and descriptions', 'Accessible content patterns', 'Performance-minded implementation'], 8, true)
 on conflict (slug) do nothing;
+
+do $$
+begin
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
+    and not exists (
+      select 1 from pg_publication_tables
+      where pubname = 'supabase_realtime'
+        and schemaname = 'public'
+        and tablename = 'site_services'
+    ) then
+    alter publication supabase_realtime add table public.site_services;
+  end if;
+end;
+$$;

@@ -79,3 +79,17 @@ on storage.objects
 for delete
 to authenticated
 using (bucket_id = 'site-showcase-images' and public.is_site_admin());
+
+do $$
+begin
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
+    and not exists (
+      select 1 from pg_publication_tables
+      where pubname = 'supabase_realtime'
+        and schemaname = 'public'
+        and tablename = 'site_showcase_projects'
+    ) then
+    alter publication supabase_realtime add table public.site_showcase_projects;
+  end if;
+end;
+$$;

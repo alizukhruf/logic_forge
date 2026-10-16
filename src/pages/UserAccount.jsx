@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { LogOut, Mail, MessageCircle, Phone, RefreshCw, Send, UserRound } from 'lucide-react'
-import { Seo } from '../components'
+import { LogOut, MessageCircle, RefreshCw, Send, UserRound } from 'lucide-react'
+import { PasswordEditor, ProfileEditor, Seo } from '../components'
 import { supabase } from '../lib/supabase'
 
 const statuses = {
@@ -75,8 +75,19 @@ export function UserAccount({ session }) {
 
   useEffect(() => {
     void loadAccount(true)
-    const interval = window.setInterval(() => void loadAccount(), 15000)
-    return () => window.clearInterval(interval)
+
+    const channel = supabase
+      .channel(`user-account-${userId}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'user_profiles', filter: `id=eq.${userId}` }, () => void loadAccount())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'project_inquiries', filter: `user_id=eq.${userId}` }, () => void loadAccount())
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'inquiry_messages' }, () => void loadAccount())
+      .subscribe(status => {
+        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          setError('Live updates are unavailable. Use Refresh to load the latest account information.')
+        }
+      })
+
+    return () => { void supabase.removeChannel(channel) }
   }, [loadAccount])
 
   const sendMessage = async (event, inquiry) => {
@@ -156,14 +167,12 @@ export function UserAccount({ session }) {
                 <div className="flex items-center gap-4">
                   <span className="grid h-14 w-14 place-items-center rounded-2xl bg-cyan/10 text-cyan"><UserRound size={27} /></span>
                   <div>
-                    <h2 id="profile-heading" className="text-2xl font-bold">{profile?.full_name || 'Your profile'}</h2>
+                    <h2 id="profile-heading" className="text-2xl font-bold">Your profile</h2>
                     <p className="text-sm text-white/55">Member since {profile?.created_at ? formatDate(profile.created_at) : '—'}</p>
                   </div>
                 </div>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  <p className="flex min-w-0 items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm"><Mail size={17} className="shrink-0 text-cyan" /><span className="min-w-0"><span className="block text-xs uppercase tracking-wider text-white/45">Email</span><span className="block break-all font-semibold">{profile?.email || session.user.email}</span></span></p>
-                  <p className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm"><Phone size={17} className="shrink-0 text-cyan" /><span><span className="block text-xs uppercase tracking-wider text-white/45">Phone</span><span className="font-semibold">{profile?.phone || 'Not provided'}</span></span></p>
-                </div>
+                {profile && <ProfileEditor profile={profile} onSaved={setProfile} />}
+                {profile && <PasswordEditor email={profile.email || session.user.email} />}
               </section>
 
               <div className="mb-5 flex items-end justify-between gap-4">

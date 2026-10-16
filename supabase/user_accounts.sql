@@ -78,3 +78,51 @@ using (id = auth.uid() or public.is_site_admin());
 grant usage on schema public to authenticated;
 revoke all on public.user_profiles from anon, authenticated;
 grant select on public.user_profiles to authenticated;
+grant update (full_name, phone) on public.user_profiles to authenticated;
+
+drop policy if exists "Users can update own profile or admins can update all" on public.user_profiles;
+create policy "Users can update own profile or admins can update all"
+on public.user_profiles
+for update
+to authenticated
+using (id = auth.uid() or public.is_site_admin())
+with check (id = auth.uid() or public.is_site_admin());
+
+create or replace function public.validate_user_profile_phone()
+returns trigger
+language plpgsql
+set search_path = public, pg_temp
+as $$
+begin
+  if new.phone = '' then
+    return new;
+  end if;
+
+  if new.phone !~ '^\+?[\d\s().-]+$'
+    or length(regexp_replace(new.phone, '[^0-9]', '', 'g')) not between 7 and 15 then
+    raise exception 'Enter a phone number with 7 to 15 digits using standard phone punctuation.'
+      using errcode = '22023';
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists validate_user_profile_phone on public.user_profiles;
+create trigger validate_user_profile_phone
+before insert or update of phone on public.user_profiles
+for each row execute procedure public.validate_user_profile_phone();
+
+do $$
+begin
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
+    and not exists (
+      select 1 from pg_publication_tables
+      where pubname = 'supabase_realtime'
+        and schemaname = 'public'
+        and tablename = 'user_profiles'
+    ) then
+    alter publication supabase_realtime add table public.user_profiles;
+  end if;
+end;
+$$;

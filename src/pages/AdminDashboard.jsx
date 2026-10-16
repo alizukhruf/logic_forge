@@ -28,7 +28,7 @@ import { supabase } from '../lib/supabase'
 import { fetchShowcaseProjects, publishShowcaseProjects, uploadShowcaseProjectImage } from '../lib/showcase'
 import { toServiceRecord, useServices } from '../lib/services.jsx'
 import { useContactInfo } from '../lib/contactInfo.jsx'
-import { Seo } from '../components'
+import { PasswordEditor, ProfileEditor, Seo } from '../components'
 import { projects } from '../data'
 
 const emptyServiceDraft = {
@@ -44,6 +44,7 @@ const emptyServiceDraft = {
 
 const adminSections = [
   { path: '/admin', key: 'overview', label: 'Overview', icon: LayoutDashboard },
+  { path: '/admin/profile', key: 'profile', label: 'My profile', icon: CircleUserRound },
   { path: '/admin/inquiries', key: 'inquiries', label: 'Inquiries', icon: Inbox },
   { path: '/admin/users', key: 'users', label: 'All users', icon: Users },
   { path: '/admin/showcase', key: 'showcase', label: 'Showcase', icon: Image },
@@ -73,6 +74,9 @@ export function AdminDashboard({ session, section = 'overview' }) {
   const { contactInfo, contactInfoError, loadingContactInfo, saveContactInfo } = useContactInfo()
   const [inquiries, setInquiries] = useState([])
   const [users, setUsers] = useState([])
+  const [adminProfile, setAdminProfile] = useState(null)
+  const [adminProfileError, setAdminProfileError] = useState('')
+  const [adminProfileLoading, setAdminProfileLoading] = useState(false)
   const [usersLoading, setUsersLoading] = useState(false)
   const [usersError, setUsersError] = useState('')
   const [selectedUser, setSelectedUser] = useState(null)
@@ -113,6 +117,50 @@ export function AdminDashboard({ session, section = 'overview' }) {
   const selectedShowcaseProject = projects.find(project => project.slug === selectedShowcaseSlug)
   const selectedStoredProject = storedShowcaseProjects[selectedShowcaseSlug]
   const selectedService = services.find(service => service.slug === selectedServiceSlug)
+
+  useEffect(() => {
+    if (activeSection !== 'profile') return undefined
+    let active = true
+    setAdminProfileLoading(true)
+    setAdminProfileError('')
+
+    const loadProfile = async () => {
+      const { data, error: fetchError } = await supabase
+        .from('user_profiles')
+        .select('id, email, full_name, phone, role, created_at')
+        .eq('id', session.user.id)
+        .maybeSingle()
+
+      if (!active) return
+      if (fetchError) setAdminProfileError(fetchError.message || 'Unable to load your profile.')
+      else if (!data) setAdminProfileError('Your profile could not be found.')
+      else {
+        setAdminProfile(data)
+        setAdminProfileError('')
+      }
+      setAdminProfileLoading(false)
+    }
+
+    void loadProfile().catch(fetchError => {
+      if (active) {
+        setAdminProfileError(fetchError.message || 'Unable to load your profile.')
+        setAdminProfileLoading(false)
+      }
+    })
+    const channel = supabase
+      .channel(`admin-profile-${session.user.id}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'user_profiles', filter: `id=eq.${session.user.id}` }, () => void loadProfile())
+      .subscribe(status => {
+        if (active && (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT')) {
+          setAdminProfileError('Live profile updates are unavailable. Reload the page to see recent changes.')
+        }
+      })
+
+    return () => {
+      active = false
+      void supabase.removeChannel(channel)
+    }
+  }, [activeSection, session.user.id])
 
   useEffect(() => {
     if (activeSection !== 'contact-info' || loadingContactInfo) return
@@ -159,7 +207,7 @@ export function AdminDashboard({ session, section = 'overview' }) {
     if (activeSection !== 'showcase') return undefined
     let active = true
 
-    fetchShowcaseProjects()
+    const refreshShowcase = () => fetchShowcaseProjects()
       .then(showcaseProjects => {
         if (active) setStoredShowcaseProjects(showcaseProjects)
       })
@@ -169,7 +217,20 @@ export function AdminDashboard({ session, section = 'overview' }) {
         }
       })
 
-    return () => { active = false }
+    void refreshShowcase()
+    const channel = supabase
+      .channel('admin-showcase-projects')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'site_showcase_projects' }, () => void refreshShowcase())
+      .subscribe(status => {
+        if (active && (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT')) {
+          setShowcaseStatus('Live showcase updates are unavailable. Reload this page to see recent changes.')
+        }
+      })
+
+    return () => {
+      active = false
+      void supabase.removeChannel(channel)
+    }
   }, [activeSection])
 
   useEffect(() => {
@@ -189,12 +250,27 @@ export function AdminDashboard({ session, section = 'overview' }) {
         setUsersError(fetchError.message || 'Unable to load registered users.')
       } else {
         setUsers(data || [])
+        setSelectedUser(current => current
+          ? (data || []).find(user => user.id === current.id) || current
+          : current)
       }
       setUsersLoading(false)
     }
 
     void loadUsers()
-    return () => { active = false }
+    const channel = supabase
+      .channel('admin-user-profiles')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'user_profiles' }, () => void loadUsers())
+      .subscribe(status => {
+        if (active && (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT')) {
+          setUsersError('Live updates are unavailable. Reload the user directory to see recent changes.')
+        }
+      })
+
+    return () => {
+      active = false
+      void supabase.removeChannel(channel)
+    }
   }, [activeSection, reloadKey])
 
   useEffect(() => {
@@ -223,12 +299,53 @@ export function AdminDashboard({ session, section = 'overview' }) {
     }
 
     void loadMessages()
-    const interval = window.setInterval(() => void loadMessages(), 15000)
+    const channel = supabase
+      .channel(`admin-inquiry-chat-${activeChatId}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'inquiry_messages', filter: `inquiry_id=eq.${activeChatId}` }, () => void loadMessages())
+      .subscribe(status => {
+        if (active && (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT')) {
+          setChatError('Live chat updates are unavailable. Close and reopen this conversation to reload it.')
+        }
+      })
+
     return () => {
       active = false
-      window.clearInterval(interval)
+      void supabase.removeChannel(channel)
     }
   }, [activeChatId, activeSection])
+
+  useEffect(() => {
+    if (activeSection !== 'users' || !selectedUser) return undefined
+    let active = true
+    const refreshUserInquiries = async () => {
+      const { data, error: fetchError } = await supabase
+        .from('project_inquiries')
+        .select('*')
+        .eq('user_id', selectedUser.id)
+        .order('created_at', { ascending: false })
+
+      if (!active) return
+      if (fetchError) setUserDetailsError(fetchError.message || 'Unable to refresh this user’s inquiries.')
+      else {
+        setUserInquiries(data || [])
+        setUserDetailsError('')
+      }
+    }
+
+    const channel = supabase
+      .channel(`admin-user-inquiries-${selectedUser.id}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'project_inquiries', filter: `user_id=eq.${selectedUser.id}` }, () => void refreshUserInquiries())
+      .subscribe(status => {
+        if (active && (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT')) {
+          setUserDetailsError('Live inquiry updates are unavailable. Close and reopen this user to reload their inquiries.')
+        }
+      })
+
+    return () => {
+      active = false
+      void supabase.removeChannel(channel)
+    }
+  }, [activeSection, selectedUser])
 
   const summary = useMemo(() => {
     const total = inquiries.length
@@ -290,7 +407,16 @@ export function AdminDashboard({ session, section = 'overview' }) {
       }
     }
 
-    loadInquiries()
+    void loadInquiries()
+    const channel = supabase
+      .channel('admin-project-inquiries')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'project_inquiries' }, () => void loadInquiries())
+      .subscribe(status => {
+        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          setError('Live inquiry updates are unavailable. Reload this page to see recent changes.')
+        }
+      })
+    return () => { void supabase.removeChannel(channel) }
   }, [activeSection, navigate, reloadKey, session])
 
   const filteredInquiries = useMemo(() => {
@@ -405,6 +531,11 @@ export function AdminDashboard({ session, section = 'overview' }) {
     setSelectedUser(null)
     setUserInquiries([])
     setUserDetailsError('')
+  }
+
+  const updateSelectedUser = updatedProfile => {
+    setSelectedUser(updatedProfile)
+    setUsers(current => current.map(user => user.id === updatedProfile.id ? updatedProfile : user))
   }
 
   const handleSignOut = async () => {
@@ -657,6 +788,27 @@ export function AdminDashboard({ session, section = 'overview' }) {
                     </button>
                   ))}
                 </div>
+              )}
+            </section>
+          )}
+
+          {activeSection === 'profile' && (
+            <section className="admin-card max-w-3xl" aria-labelledby="admin-profile-heading">
+              <h2 id="admin-profile-heading" className="text-xl font-bold text-white">Administrator profile</h2>
+              <p className="mt-2 text-sm text-violet-100/70">Update your personal details and password. Your email and administrator role are managed separately.</p>
+              {adminProfileLoading ? (
+                <p className="mt-5 text-sm text-violet-100/70">Loading your profile…</p>
+              ) : adminProfileError ? (
+                <p role="alert" className="mt-5 rounded-xl border border-red-300/30 bg-red-500/10 p-4 text-sm text-red-100">{adminProfileError}. Run <code>supabase/user_accounts.sql</code> if the profile table is unavailable.</p>
+              ) : adminProfile && (
+                <>
+                  <ProfileEditor profile={adminProfile} onSaved={setAdminProfile} />
+                  <PasswordEditor email={adminProfile.email} />
+                  <div className="mt-6 grid gap-4 border-t border-white/10 pt-6 sm:grid-cols-2">
+                    <p className="text-sm"><span className="block text-xs font-semibold uppercase tracking-wider text-violet-100/50">Account role</span><span className="mt-1 block font-semibold capitalize">{adminProfile.role}</span></p>
+                    <p className="text-sm"><span className="block text-xs font-semibold uppercase tracking-wider text-violet-100/50">Member since</span><span className="mt-1 block font-semibold">{formatDate(adminProfile.created_at)}</span></p>
+                  </div>
+                </>
               )}
             </section>
           )}
@@ -1146,17 +1298,17 @@ export function AdminDashboard({ session, section = 'overview' }) {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-cyan">User details</p>
-                <h2 id="user-details-title" className="mt-2 text-2xl font-black sm:text-3xl">{selectedUser.full_name || 'Name not provided'}</h2>
+                <h2 id="user-details-title" className="mt-2 text-2xl font-black sm:text-3xl">Edit user profile</h2>
               </div>
               <button type="button" onClick={closeUserDetails} className="rounded-xl border border-white/15 p-2 text-white/70 transition hover:bg-white/10 hover:text-white" aria-label="Close user details"><X size={20} /></button>
             </div>
 
-            <div className="mt-6 grid gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:grid-cols-2">
-              <p className="min-w-0 break-all text-sm"><span className="block text-xs font-semibold uppercase tracking-wider text-violet-100/50">Email</span><a className="mt-1 inline-block text-cyan hover:text-white" href={`mailto:${selectedUser.email}`}>{selectedUser.email}</a></p>
-              <p className="text-sm"><span className="block text-xs font-semibold uppercase tracking-wider text-violet-100/50">Phone</span><span className="mt-1 inline-block">{selectedUser.phone || 'Not provided'}</span></p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <p className="text-sm"><span className="block text-xs font-semibold uppercase tracking-wider text-violet-100/50">Account type</span><span className="mt-1 inline-block capitalize">{selectedUser.role}</span></p>
               <p className="text-sm"><span className="block text-xs font-semibold uppercase tracking-wider text-violet-100/50">Joined</span><span className="mt-1 inline-block">{formatDate(selectedUser.created_at)}</span></p>
             </div>
+
+            <ProfileEditor profile={selectedUser} onSaved={updateSelectedUser} buttonLabel="Save user profile" />
 
             <div className="mt-7">
               <h3 className="text-lg font-bold">Inquiries</h3>
