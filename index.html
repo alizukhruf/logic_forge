@@ -1,35 +1,22 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Logic Forge | Website Development</title>
-<meta name="description" content="Logic Forge builds modern, fast, responsive websites for businesses." />
-<meta property="og:title" content="Logic Forge | Website Development" />
-<meta property="og:description" content="Your Vision, Our Code, Real Results." />
+<title>Logic Forge | Web Development for Growing Businesses</title>
+<meta name="description" content="Logic Forge helps businesses build modern websites, responsive web applications, and digital experiences designed to turn visitors into customers." />
+<meta property="og:title" content="Logic Forge | Web Development for Growing Businesses" />
+<meta property="og:description" content="Logic Forge helps businesses build modern websites, responsive web applications, and digital experiences designed to turn visitors into customers." />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://logic-forge-eosin.vercel.app/" />
+<meta property="og:image" content="https://logic-forge-eosin.vercel.app/logic-forge-mark.png" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://logic-forge-eosin.vercel.app/" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Logic Forge | Website Development" />
-<meta name="twitter:description" content="Logic Forge builds modern, fast, responsive websites for businesses." />
+<meta name="twitter:title" content="Logic Forge | Web Development for Growing Businesses" />
+<meta name="twitter:description" content="Logic Forge helps businesses build modern websites, responsive web applications, and digital experiences designed to turn visitors into customers." />
+<meta name="twitter:image" content="https://logic-forge-eosin.vercel.app/logic-forge-mark.png" />
 <link rel="icon" type="image/png" href="%BASE_URL%logic-forge-mark.png" />
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
 </head><body>
 	<div id="root"></div>
-	<script type="module">
-		const basePath = import.meta.env.BASE_URL || '/';
-		const { pathname, search, hash } = window.location;
-
-		const normalize = (route) => route.replace(/^\/+/, '').replace(/\/+$/, '') || '/';
-
-		if (!hash) {
-			const base = basePath === '/' ? '/' : basePath.replace(/\/+$/, '') + '/';
-			const route = pathname === base ? '/' : pathname.replace(new RegExp(`^${base.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`), '') || '/';
-			const safeRoute = normalize(route);
-			const targetHash = safeRoute === '/' ? '/' : `/${safeRoute}`;
-			const targetPath = `${base}#${targetHash}${search}`;
-
-			if (pathname !== '/' || !hash) {
-				window.location.replace(targetPath);
-			}
-		}
-	</script>
 	<script type="module" src="/src/main.jsx"></script>
 </body></html>

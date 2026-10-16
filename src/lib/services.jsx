@@ -64,6 +64,16 @@ export function ServicesProvider({ children }) {
 
   useEffect(() => {
     refreshServices()
+    const channel = supabase
+      .channel('public-site-services')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'site_services' }, () => void refreshServices())
+      .subscribe(status => {
+        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          setServicesError('Live service updates are unavailable. Reload the page to see recent changes.')
+        }
+      })
+
+    return () => { void supabase.removeChannel(channel) }
   }, [refreshServices])
 
   const value = useMemo(() => ({

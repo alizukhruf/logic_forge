@@ -12,12 +12,8 @@ function Particles() {
     const f = () => {
       x.clearRect(0, 0, w, h)
       P.forEach(p => { p.x = (p.x + p.vx + 1) % 1; p.y = (p.y + p.vy + 1) % 1 })
-      P.forEach((a, i) => {
-        x.fillStyle = 'rgba(157,107,255,.7)'; x.beginPath(); x.arc(a.x * w, a.y * h, 1.5, 0, 7); x.fill()
-        for (let j = i + 1; j < n; j++) {
-          const b = P[j], d = Math.hypot((a.x - b.x) * w, (a.y - b.y) * h)
-          if (d < 130) { x.strokeStyle = `rgba(124,92,255,${.25 * (1 - d / 130)})`; x.beginPath(); x.moveTo(a.x * w, a.y * h); x.lineTo(b.x * w, b.y * h); x.stroke() }
-        }
+      P.forEach(a => {
+        x.fillStyle = 'rgba(103,215,255,.65)'; x.beginPath(); x.arc(a.x * w, a.y * h, 1.5, 0, 7); x.fill()
       })
       id = requestAnimationFrame(f)
     }
@@ -46,12 +42,11 @@ export function FX() {
   }, [])
 
   return (<>
-    <motion.div style={{ scaleX: sx }} className="fixed left-0 top-0 z-[70] h-[3px] w-full origin-left bg-gradient-to-r from-electric via-cyan to-violet-300" />
+    <motion.div style={{ scaleX: sx }} className="fixed left-0 top-0 z-[70] h-[3px] w-full origin-left bg-gradient-to-r from-electric via-cyan to-sky-100" />
     <div className="pointer-events-none fixed inset-0 -z-20 overflow-hidden" aria-hidden>
-      <i className="aur absolute -left-40 top-0 h-[520px] w-[520px] rounded-full bg-electric/30" />
-      <i className="aur absolute right-[-120px] top-1/3 h-[480px] w-[480px] rounded-full bg-cyan/25" style={{ animationDelay: '-7s' }} />
-      <i className="aur absolute bottom-[-160px] left-1/3 h-[520px] w-[520px] rounded-full bg-violet-700/25" style={{ animationDelay: '-14s' }} />
-      <div className="absolute inset-0 opacity-[.07]" style={{ backgroundImage: 'linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px)', backgroundSize: '56px 56px', maskImage: 'radial-gradient(circle at 50% 30%,#000,transparent 70%)', WebkitMaskImage: 'radial-gradient(circle at 50% 30%,#000,transparent 70%)' }} />
+      <i className="aur absolute -left-40 top-0 h-[520px] w-[520px] rounded-full bg-electric/10" />
+      <i className="aur absolute right-[-120px] top-1/3 h-[480px] w-[480px] rounded-full bg-cyan/10" style={{ animationDelay: '-7s' }} />
+      <i className="aur absolute bottom-[-160px] left-1/3 h-[520px] w-[520px] rounded-full bg-sky-300/10" style={{ animationDelay: '-14s' }} />
     </div>
     <Particles /><div className="cursor-glow" aria-hidden />
   </>)

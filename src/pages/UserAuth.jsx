@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { LockKeyhole, Mail, UserRound } from 'lucide-react'
+import { LockKeyhole, Mail, ShieldCheck, UserRound } from 'lucide-react'
 import { Seo } from '../components'
 import { supabase } from '../lib/supabase'
+import { normalizePhoneNumber } from '../lib/profile'
 
 export function UserAuth({ session, loading, mode }) {
   const isSignup = mode === 'signup'
@@ -30,13 +31,21 @@ export function UserAuth({ session, loading, mode }) {
 
     try {
       if (isSignup) {
+        let phone
+        try {
+          phone = normalizePhoneNumber(form.phone)
+        } catch (validationError) {
+          setError(validationError.message)
+          return
+        }
+
         const { data, error: signUpError } = await supabase.auth.signUp({
           email: form.email.trim(),
           password: form.password,
           options: {
             data: {
               full_name: form.fullName.trim(),
-              phone: form.phone.trim(),
+              phone,
             },
           },
         })
@@ -74,7 +83,7 @@ export function UserAuth({ session, loading, mode }) {
 
   return (
     <>
-      <Seo title={isSignup ? 'Create an Account' : 'User Sign In'} desc={isSignup ? 'Create a Logic Forge account to manage your project inquiries.' : 'Sign in to your Logic Forge account.'} />
+      <Seo title={isSignup ? 'Create an Account' : 'User Sign In'} desc={isSignup ? 'Create a Logic Forge account to manage your project inquiries.' : 'Sign in to your Logic Forge account.'} noindex />
       <section className="py-20 sm:py-24">
         <div className="wrap">
           <div className="card mx-auto max-w-lg overflow-hidden !p-0 text-white">
@@ -98,7 +107,8 @@ export function UserAuth({ session, loading, mode }) {
                   </label>
                   <label className="block">
                     <span className="mb-2 block text-sm font-semibold text-white/80">Phone <span className="font-normal text-white/45">optional</span></span>
-                    <input className="field" type="tel" value={form.phone} onChange={setField('phone')} autoComplete="tel" maxLength={40} />
+                    <input className="field" type="tel" inputMode="tel" value={form.phone} onChange={setField('phone')} autoComplete="tel" maxLength={24} aria-describedby="signup-phone-help" />
+                    <span id="signup-phone-help" className="mt-1 block text-xs text-white/50">Optional. Use 7–15 digits; a country code is recommended.</span>
                   </label>
                 </>
               )}
@@ -125,7 +135,9 @@ export function UserAuth({ session, loading, mode }) {
                 {isSignup ? 'Already have an account?' : 'New to Logic Forge?'}{' '}
                 <Link className="font-bold text-cyan hover:text-white" to={isSignup ? '/login' : '/signup'}>{isSignup ? 'Sign in' : 'Create an account'}</Link>
               </p>
-              <p className="text-center text-xs text-white/40">Admin? <Link className="text-white/70 underline hover:text-white" to="/admin/login">Open admin sign in</Link></p>
+              <Link to="/admin/login" className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-cyan/35 bg-cyan/10 px-4 py-3 text-sm font-bold text-cyan-100 transition hover:bg-cyan/20">
+                <ShieldCheck size={17} aria-hidden="true" /> Admin login
+              </Link>
             </form>
           </div>
         </div>

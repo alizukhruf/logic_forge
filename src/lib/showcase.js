@@ -27,52 +27,6 @@ export async function fetchShowcaseProjects() {
   }))
 }
 
-export async function publishShowcaseProjects(projects, onProgress = () => {}) {
-  const rows = []
-
-  for (const [index, project] of projects.entries()) {
-    onProgress({ current: index + 1, total: projects.length, name: project.name })
-
-    const response = await fetch(project.imageSrc)
-    if (!response.ok) {
-      throw new Error(`Unable to read the bundled image for ${project.name}.`)
-    }
-
-    const image = await response.blob()
-    const imagePath = `${project.slug}/${project.imagePath}`
-    const { error: uploadError } = await supabase.storage
-      .from(SHOWCASE_BUCKET)
-      .upload(imagePath, image, { contentType: project.imageMime || image.type || 'image/jpeg', upsert: true })
-
-    if (uploadError) {
-      throw new Error(`Could not upload the image for ${project.name}: ${uploadError.message}`)
-    }
-
-    rows.push({
-      slug: project.slug,
-      name: project.name,
-      category: project.cat,
-      description: project.desc,
-      tech: project.tech,
-      goals: project.goals,
-      features: project.features,
-      image_path: imagePath,
-      image_alt: project.imageAlt,
-      updated_at: new Date().toISOString(),
-    })
-  }
-
-  const { error: saveError } = await supabase
-    .from(SHOWCASE_TABLE)
-    .upsert(rows, { onConflict: 'slug' })
-
-  if (saveError) {
-    throw new Error(`Images uploaded, but project records could not be saved: ${saveError.message}`)
-  }
-
-  return rows.length
-}
-
 export async function uploadShowcaseProjectImage(project, file) {
   const allowedTypes = {
     'image/jpeg': 'jpg',

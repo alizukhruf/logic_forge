@@ -2,7 +2,7 @@
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: { extend: {
-    colors: { navy: '#05030F', dark: '#0B0720', cyan: '#9D6BFF', electric: '#4338F5', light: '#120C2E', ink: '#E9E6FF' },
+    colors: { navy: '#030912', dark: '#07131F', cyan: '#67D7FF', electric: '#087FA5', light: '#0B1722', ink: '#EAF7FC' },
     fontFamily: { sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'], hand: ['Caveat', 'cursive'] }
   } }
 }

@@ -1,5 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { Link, useLocation } from 'react-router-dom'
 import { Browser } from './Browser.jsx'
+import { useServices } from '../lib/services.jsx'
 
 const OrbitGraphic = () => (
   <svg
@@ -50,24 +52,31 @@ const OrbitGraphic = () => (
   </svg>
 )
 
-function FloatingPanel({ items, title, className, delay = '0s' }) {
+function FloatingPanel({ items, title, className, delay = '0s', pathname }) {
   return (
     <div
-      className={`float glass absolute w-[26%] rounded-[1.5rem] !border-2 !border-white/20 p-2 ${className}`}
+      className={`float glass absolute z-10 w-[26%] rounded-[1.5rem] !border-2 !border-white/20 p-2 ${className}`}
       style={{ animationDelay: delay }}
-      aria-hidden="true"
     >
       <p className="mb-1.5 px-1 text-[9px] font-bold text-cyan">{title}</p>
-      {items.map(item => (
-        <div key={item} className="mb-1 rounded-lg bg-white/10 px-2 py-1.5 text-[8px] font-semibold text-white">
-          {item}
-        </div>
+      {items.map(({ label, to }) => (
+        <Link
+          key={to}
+          to={to}
+          title={label}
+          aria-current={pathname === to ? 'page' : undefined}
+          className={`mb-1 block truncate rounded-lg px-2 py-1.5 text-[8px] font-semibold text-white transition-colors hover:bg-cyan/20 focus-visible:outline-cyan ${pathname === to ? 'bg-cyan/20' : 'bg-white/10'}`}
+        >
+          {label}
+        </Link>
       ))}
     </div>
   )
 }
 
 export function Devices({ title = 'We Build Powerful Websites', image, imageAlt }) {
+  const { activeServices } = useServices()
+  const { pathname } = useLocation()
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
@@ -100,19 +109,27 @@ export function Devices({ title = 'We Build Powerful Websites', image, imageAlt 
     >
       <OrbitGraphic />
       <motion.div style={{ rotateX, rotateY }} className="absolute inset-0">
-        <div className="glass absolute right-0 top-[10%] w-[72%] rounded-2xl !border-white/25 p-1.5 shadow-[0_0_80px_rgba(124,92,255,.5)]">
+        <div className="glass absolute right-0 top-[10%] w-[72%] rounded-2xl !border-white/25 p-1.5 shadow-[0_0_80px_rgba(0,0,0,.55)]">
           <Browser title={title} image={image} imageAlt={imageAlt} className="rounded-xl" />
         </div>
         <FloatingPanel
           className="left-0 top-[26%]"
           title="Menu"
           delay="1s"
-          items={['Home', 'About Us', 'Services', 'Projects', 'Pricing']}
+          pathname={pathname}
+          items={[
+            { label: 'Home', to: '/' },
+            { label: 'About Us', to: '/about' },
+            { label: 'Services', to: '/services' },
+            { label: 'Projects', to: '/projects' },
+            { label: 'Pricing', to: '/pricing' },
+          ]}
         />
         <FloatingPanel
           className="left-[19%] top-[6%]"
           title="Our Services"
-          items={['Business Websites', 'Custom Design', 'E-Commerce', 'Landing Pages', 'Maintenance']}
+          pathname={pathname}
+          items={activeServices.map(service => ({ label: service.title, to: `/services/${service.slug}` }))}
         />
       </motion.div>
     </div>

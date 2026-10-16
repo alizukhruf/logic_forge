@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { LockKeyhole, Mail, ShieldCheck } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { Seo } from '../components'
@@ -61,7 +61,7 @@ export function AdminLogin({ session, loading, isAdmin, adminError }) {
 
   return (
     <>
-      <Seo title="Admin Login" desc="Sign in to access the Logic Forge admin panel." />
+      <Seo title="Admin Login" desc="Sign in to access the Logic Forge admin panel." noindex />
       <section className="py-24">
         <div className="wrap">
           <div className="mx-auto max-w-md">
@@ -119,12 +119,20 @@ export function AdminLogin({ session, loading, isAdmin, adminError }) {
                     {error}
                   </div>
                 )}
+                {adminError && (
+                  <div role="alert" className="rounded-xl border border-amber-300/30 bg-amber-200/10 p-3 text-sm text-amber-100">
+                    Could not verify the administrator role: {adminError}
+                  </div>
+                )}
                 <button type="submit" className="btn btn-p w-full" disabled={isSubmitting}>
                   {isSubmitting ? 'Signing in…' : 'Sign in to dashboard'}
                 </button>
 
                 <p className="text-center text-xs text-white/55">
                   Only accounts assigned the admin role can access the dashboard.
+                </p>
+                <p className="text-center text-sm text-white/60">
+                  Looking for user sign in? <Link className="font-bold text-cyan hover:text-white" to="/login">User login</Link>
                 </p>
               </form>
             </div>
