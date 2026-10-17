@@ -1,4 +1,16 @@
-@tailwind base; @tailwind components; @tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #030912;
+  --color-dark: #07131f;
+  --color-cyan: #67d7ff;
+  --color-electric: #087fa5;
+  --color-light: #0b1722;
+  --color-ink: #eaf7fc;
+  --font-sans: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
+  --font-hand: Caveat, cursive;
+}
+
 @layer base {
   body { @apply font-sans text-ink bg-navy antialiased overflow-x-hidden;
     background-color: #05080d;
@@ -17,7 +29,12 @@
   .btn-p::after { content:''; position:absolute; inset:0; background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%); transform:translateX(-100%); }
   .btn-p:hover::after { transform:translateX(100%); transition:transform .7s; }
   .btn-s, .btn-d { @apply border border-white/25 text-white backdrop-blur-md hover:bg-white/10; }
-  .card { @apply glass relative rounded-2xl p-6 transition-[border-color,box-shadow] hover:border-cyan/60; transform: perspective(900px) rotateX(var(--ry,0deg)) rotateY(var(--rx,0deg)) translateY(var(--ty,0px)); }
+  .card {
+    @apply relative rounded-2xl border border-white/10 p-6 backdrop-blur-xl transition-[border-color,box-shadow] hover:border-cyan/60;
+    background: rgba(7,12,18,.78);
+    box-shadow: 0 12px 36px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.07);
+    transform: perspective(900px) rotateX(var(--ry,0deg)) rotateY(var(--rx,0deg)) translateY(var(--ty,0px));
+  }
   .card:hover { --ty: -4px; box-shadow: 0 16px 48px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.15); }
   .card::before { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .3s; background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(103,215,255,.1), transparent 60%); }
   .card:hover::before { opacity:1; }
