@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import { motion, useReducedMotion } from 'framer-motion'
-import { Header, Footer, FX } from './components'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { Header, Footer, FX, LoadingScreen } from './components'
 import { supabase } from './lib/supabase'
 import { ServicesProvider } from './lib/services.jsx'
 import { ShowcaseProvider } from './lib/showcase.jsx'
@@ -69,6 +69,7 @@ export default function Layout() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [adminLoading, setAdminLoading] = useState(true)
   const [adminError, setAdminError] = useState('')
+  const [showLoadingScreen, setShowLoadingScreen] = useState(true)
   const [theme, setTheme] = useState(() => {
     try {
       const savedTheme = window.localStorage.getItem('logic-forge-theme')
@@ -79,6 +80,19 @@ export default function Layout() {
     }
   })
   const adminRequest = useRef(0)
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow
+    if (showLoadingScreen) document.body.style.overflow = 'hidden'
+    const duration = reduceMotion ? 650 : 2900
+    const timeout = showLoadingScreen
+      ? window.setTimeout(() => setShowLoadingScreen(false), duration)
+      : undefined
+    return () => {
+      if (timeout) window.clearTimeout(timeout)
+      document.body.style.overflow = previousOverflow
+    }
+  }, [reduceMotion, showLoadingScreen])
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -198,6 +212,9 @@ export default function Layout() {
             </Suspense>
           </motion.main>
           {!pathname.startsWith('/admin') && !isAdmin && <Footer />}
+          <AnimatePresence>
+            {showLoadingScreen && <LoadingScreen reducedMotion={Boolean(reduceMotion)} />}
+          </AnimatePresence>
         </ContactInfoProvider>
       </ShowcaseProvider>
     </ServicesProvider>

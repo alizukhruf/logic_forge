@@ -24,7 +24,7 @@ export function Home() {
           name: 'Logic Forge',
           url: 'https://logic-forge-eosin.vercel.app/',
           logo: 'https://logic-forge-eosin.vercel.app/logic-forge-mark.png',
-          email: 'alizukhruf07@gmail.com',
+          email: 'logicforge.admin@gmail.com',
         }}
       />
       <section className="dark-bg overflow-hidden">
@@ -74,7 +74,7 @@ export function Home() {
               image={businessScreenshot}
               imageAlt={businessScreenshotAlt || 'Business website screenshot concept'}
             />
-            <p className="mt-3 text-center text-xs text-white/50">Illustrative website concept, not a completed client project.</p>
+            
           </div>
         </div>
       </section>

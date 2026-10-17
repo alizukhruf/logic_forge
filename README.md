@@ -1,8 +1,9 @@
-﻿# Logic Forge Website
+﻿
+# Logic Forge Website
 React + Vite + Tailwind + React Router + Framer Motion + Lucide.
 
 ## Prerequisites
-Node.js 18+.
+Node.js 20.19+ (or 22.12+) for the website. Use Node.js 22.12+ to install dependencies and run or package the Electron desktop app.
 
 ## Run
 ```
@@ -11,6 +12,16 @@ npm run dev      # development
 npm run build    # production build in /dist
 npm run preview  # preview the build
 ```
+
+## Windows desktop app
+The desktop app wraps the existing React interface in Electron. It uses hash-based routes and relative build assets only for desktop builds; the regular web build continues to use clean BrowserRouter URLs for Vercel.
+
+1. Install dependencies: `npm install`
+2. Run the desktop app in development: `npm run desktop:dev` (starts Vite and Electron together; close the app or press Ctrl+C to stop).
+3. Build the x64 Windows NSIS installer: `npm run desktop:build`
+4. Find the installer at `release/Logic-Forge-Setup.exe`.
+
+The installer is built for 64-bit Windows. It is not code-signed, so Windows may display a SmartScreen warning. The desktop application keeps Electron's renderer isolated (`contextIsolation` enabled, Node integration disabled, and sandboxing enabled) and does not expose Node APIs to the website. Supabase authentication, database, storage, and Realtime features still require an internet connection and the configured Supabase project. The renderer uses only the Supabase publishable/anon key; never put a service-role key or other privileged secret in a `VITE_` variable or desktop build. Vite embeds client-side environment values in the application, so treat every `VITE_` value as public. The normal `npm run build` and Vercel deployment workflow are unchanged.
 
 ## Customize
 - **Brand colors:** `tailwind.config.js` (navy, dark, cyan, electric, light).
