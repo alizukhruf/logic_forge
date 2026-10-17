@@ -160,10 +160,10 @@ export function UserAccount({ session }) {
           {error && <p role="alert" className="mb-6 rounded-xl border border-red-300/30 bg-red-500/10 p-4 text-sm text-red-100">{error}</p>}
 
           {loading ? (
-            <div className="glass rounded-3xl p-8 text-center text-white/70">Loading your account…</div>
+            <div className="glass surface-card rounded-3xl p-8 text-center text-white/70">Loading your account…</div>
           ) : (
             <>
-              <section className="glass mb-8 rounded-3xl p-6 sm:p-8" aria-labelledby="profile-heading">
+              <section className="glass surface-card mb-8 rounded-3xl p-6 sm:p-8" aria-labelledby="profile-heading">
                 <div className="flex items-center gap-4">
                   <span className="grid h-14 w-14 place-items-center rounded-2xl bg-cyan/10 text-cyan"><UserRound size={27} /></span>
                   <div>
@@ -184,7 +184,7 @@ export function UserAccount({ session }) {
               </div>
 
               {!inquiries.length ? (
-                <div className="glass rounded-3xl p-8 text-center">
+                <div className="glass surface-card rounded-3xl p-8 text-center">
                   <MessageCircle className="mx-auto mb-3 text-cyan" size={30} />
                   <p className="font-semibold">You have not submitted any inquiries yet.</p>
                   <Link to="/contact" className="btn btn-p mt-5">Contact us</Link>
@@ -195,7 +195,7 @@ export function UserAccount({ session }) {
                     const inquiryMessages = messagesByInquiry[inquiry.id] || []
                     const status = statuses[inquiry.status] ? inquiry.status : 'new'
                     return (
-                      <article key={inquiry.id} className="glass overflow-hidden rounded-3xl">
+                      <article key={inquiry.id} className="glass surface-card overflow-hidden rounded-3xl">
                         <div className="border-b border-white/10 p-5 sm:p-6">
                           <div className="flex flex-wrap items-start justify-between gap-3">
                             <div>

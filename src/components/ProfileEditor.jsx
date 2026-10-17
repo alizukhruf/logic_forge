@@ -55,7 +55,7 @@ export function ProfileEditor({ profile, onSaved, buttonLabel = 'Save profile' }
     }
   }
 
-  const cardClass = 'flex min-w-0 items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm focus-within:border-cyan/50'
+  const cardClass = 'surface-card flex min-w-0 items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-4 text-sm focus-within:border-cyan/50'
   const iconClass = 'shrink-0 text-cyan'
   const valueClass = 'mt-1 block w-full min-w-0 bg-transparent font-semibold text-white outline-none placeholder:text-white/40 focus:ring-0'
 
