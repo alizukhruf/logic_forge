@@ -46,7 +46,7 @@ export function Home() {
               {[0, 1, 3].map(index => {
                 const benefit = benefits[index]
                 return (
-                  <div key={benefit.title} className="glass rounded-2xl p-3 text-center text-xs font-semibold">
+                  <div key={benefit.title} className="glass surface-card rounded-2xl p-3 text-center text-xs font-semibold">
                     <benefit.icon className="mx-auto mb-1 text-cyan" size={22} aria-hidden="true" />
                     {benefit.title}
                   </div>

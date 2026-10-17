@@ -76,7 +76,7 @@ export function SelectField({ id, value, options, placeholder, onChange, ariaInv
           id={`${id}-options`}
           role="listbox"
           aria-label={placeholder}
-          className="absolute left-0 right-0 z-50 mt-1 max-h-56 overflow-y-auto rounded-xl border border-white/20 bg-[#0B0720] p-1 text-white shadow-2xl"
+          className="select-options absolute left-0 right-0 z-50 mt-1 max-h-56 overflow-y-auto rounded-xl border border-white/20 p-1 text-white shadow-2xl"
         >
           {options.map((option, index) => (
             <li

@@ -294,7 +294,7 @@ html[data-theme="light"] .field {
 html[data-theme="light"] .field::placeholder { color: rgba(31, 58, 79, .48); }
 html[data-theme="light"] .btn-p {
   color: #fff;
-  background-image: linear-gradient(105deg, #087fa5, #13a6c9 58%, #087fa5);
+  background-image: linear-gradient(105deg, #07516e, #076b8a 58%, #07516e);
   box-shadow: 0 8px 24px rgba(8,127,165,.22);
 }
 html[data-theme="light"] .btn-s,
@@ -347,7 +347,9 @@ html[data-theme="light"] [class~="text-sky-100/50"] { color: #60778a; }
 html[data-theme="light"] [class~="text-sky-200"],
 html[data-theme="light"] [class~="text-sky-200/90"],
 html[data-theme="light"] [class~="text-sky-200/80"],
-html[data-theme="light"] [class~="text-cyan"] { color: #087fa5; }
+html[data-theme="light"] [class~="text-cyan"],
+html[data-theme="light"] [class~="text-electric"],
+html[data-theme="light"] [class*="text-sky-200/"] { color: #076b8a; }
 html[data-theme="light"] [class*="text-white/"],
 html[data-theme="light"] [class*="text-sky-100/"] { color: #526a7d; }
 html[data-theme="light"] [class*="text-sky-200/"] { color: #087fa5; }
@@ -379,9 +381,108 @@ html[data-theme="light"] [class~="bg-white/[0.06]"] { background-color: rgba(255
 html[data-theme="light"] [class~="bg-black/10"],
 html[data-theme="light"] [class~="bg-black/15"],
 html[data-theme="light"] [class~="bg-black/20"] { background-color: rgba(25,56,78,.06); }
-html[data-theme="light"] [class~="bg-[#100c20]"],
-html[data-theme="light"] [class~="bg-[#0B0720]"] { background-color: #f5f9fc; }
 html[data-theme="light"] [class~="placeholder:text-white/40"]::placeholder { color: #647a8b; }
+html[data-theme="light"] .card,
+html[data-theme="light"] .admin-card,
+html[data-theme="light"] .surface-card {
+  border-color: rgba(103,215,255,.2);
+  background: rgba(7,12,18,.9);
+  box-shadow: 0 12px 32px rgba(18,42,60,.18), inset 0 1px 0 rgba(255,255,255,.07);
+  color: #fff;
+}
+html[data-theme="light"] .admin-card::before {
+  background: linear-gradient(135deg, rgba(255,255,255,.06), transparent 45%, rgba(76,154,197,.025));
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-white"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class*="text-white/"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-ink"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class*="text-ink/"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class*="text-sky-100"] {
+  color: #fff;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-cyan"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-electric"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-sky-200"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class*="text-sky-200/"] {
+  color: #67d7ff;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-red-100"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-red-100/75"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-red-100/80"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-red-200"] {
+  color: #fca5a5;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-amber-100"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-amber-200"] {
+  color: #fcd34d;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-emerald-100"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-emerald-200"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="text-emerald-300"] {
+  color: #6ee7b7;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="bg-white/5"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="bg-white/10"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="bg-white/[0.04]"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="bg-white/[0.05]"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="bg-white/[0.06]"] {
+  background-color: rgba(255,255,255,.08);
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="bg-black/10"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="bg-black/15"],
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class~="bg-black/20"] {
+  background-color: rgba(0,0,0,.22);
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .btn-s,
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .btn-d {
+  border-color: rgba(255,255,255,.24);
+  background-color: rgba(255,255,255,.08);
+  color: #fff;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .btn-s:hover,
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .btn-d:hover {
+  background-color: rgba(255,255,255,.16);
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .bg-cyan.text-ink {
+  color: #14283b;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) [class*="bg-gradient-to-br"].text-white {
+  background-image: linear-gradient(to bottom right, #076b8a, #07516e);
+  color: #fff;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .grad-text {
+  background-image: linear-gradient(90deg, #67d7ff, #8bdeff, #c4f4ff, #67d7ff);
+}
+html[data-theme="light"] header nav a:hover,
+html[data-theme="light"] header nav button:hover,
+html[data-theme="light"] header > div > button:hover {
+  color: #07516e;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .field {
+  border-color: rgba(255,255,255,.2);
+  background-color: rgba(0,0,0,.22);
+  color: #fff;
+  color-scheme: dark;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .field::placeholder {
+  color: rgba(255,255,255,.55);
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .select-options {
+  border-color: rgba(255,255,255,.2);
+  background-color: #07131f;
+  color: #fff;
+  color-scheme: dark;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .select-options [role="option"] {
+  color: #fff;
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .select-options [role="option"]:hover {
+  background-color: rgba(255,255,255,.12);
+}
+html[data-theme="light"] :is(.card, .admin-card, .surface-card) .select-options [role="option"].bg-electric {
+  background-color: #087fa5;
+  color: #fff;
+}
 html[data-theme="light"] .admin-portal-motion { color: #14283b; }
 html[data-theme="light"] .footer-cta-card {
   border-color: rgba(8,127,165,.15);
